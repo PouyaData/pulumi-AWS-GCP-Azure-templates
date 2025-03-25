@@ -23,8 +23,8 @@ class AzureComponent(CloudServiceComponent):
         # admin_username = azure.keyvault.get_secret(name="adminUsername", key_vault_id=key_vault_id).value
         # admin_password = azure.keyvault.get_secret(name="adminPassword", key_vault_id=key_vault_id).value
 
-        self.admin_username = 'admin'
-        self.admin_password = 'Super!@#$$#@!1234'
+        self.admin_username = "admin"
+        self.admin_password = "Super!@#$$#@!1234"
 
 
     def create_network(self):
