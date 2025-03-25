@@ -14,6 +14,7 @@ class AzureComponent(CloudServiceComponent):
         # Logic for accessing secrets from Azure Key Vault
         key_vault_name = self.config.get("key_vault_name")
         subscription_id = self.config.get("subscription_id")
+        print(subscription_id)
         resource_group_name = self.config.get("resource_group_name")
 
         key_vault_id = f"/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{key_vault_name}"
