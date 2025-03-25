@@ -12,83 +12,83 @@ class AzureComponent(CloudServiceComponent):
 
     def create_key_vault(self):
         # Logic for accessing secrets from Azure Key Vault
-        key_vault_name = self.config.get("key_vault_name")
-        subscription_id = self.config.get("subscription_id")
-        print(subscription_id)
-        resource_group_name = self.config.get("resource_group_name")
+        # key_vault_name = self.config.get("key_vault_name")
+        # subscription_id = self.config.get("subscription_id")
+        # print(subscription_id)
+        # resource_group_name = self.config.get("resource_group_name")
 
-        key_vault_id = f"/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{key_vault_name}"
+        # key_vault_id = f"/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{key_vault_name}"
 
-        # Get secrets from Key Vault
-        # admin_username = azure.keyvault.get_secret(name="adminUsername", key_vault_id=key_vault_id).value
-        # admin_password = azure.keyvault.get_secret(name="adminPassword", key_vault_id=key_vault_id).value
+        # # Get secrets from Key Vault
+        # # admin_username = azure.keyvault.get_secret(name="adminUsername", key_vault_id=key_vault_id).value
+        # # admin_password = azure.keyvault.get_secret(name="adminPassword", key_vault_id=key_vault_id).value
 
-        self.admin_username = "admin"
-        self.admin_password = "Super!@#$$#@!1234"
+        # self.admin_username = "admin"
+        # self.admin_password = "Super!@#$$#@!1234"
 
 
     def create_network(self):
         # Logic for creating a Virtual         
-        appname = pulumi.get_project()
-        location = self.config.get("location")
-        resource_group_name = self.config.get("resource_group_name")
+        # appname = pulumi.get_project()
+        # location = self.config.get("location")
+        # resource_group_name = self.config.get("resource_group_name")
 
-        virtual_network = azure_native.network.VirtualNetwork("virtualNetwork",
-            address_space={
-                "addressPrefixes": ["10.0.0.0/16"],
-            },
-            location=location,
-            resource_group_name=resource_group_name,
-            virtual_network_name=f"{appname}-azure-vn")
+        # virtual_network = azure_native.network.VirtualNetwork("virtualNetwork",
+        #     address_space={
+        #         "addressPrefixes": ["10.0.0.0/16"],
+        #     },
+        #     location=location,
+        #     resource_group_name=resource_group_name,
+        #     virtual_network_name=f"{appname}-azure-vn")
 
-        subnet = azure_native.network.Subnet("subnet",
-            address_prefix="10.0.0.0/16",
-            resource_group_name=resource_group_name,
-            subnet_name=f"{appname}-azure-sn",
-            virtual_network_name=virtual_network.name)
+        # subnet = azure_native.network.Subnet("subnet",
+        #     address_prefix="10.0.0.0/16",
+        #     resource_group_name=resource_group_name,
+        #     subnet_name=f"{appname}-azure-sn",
+        #     virtual_network_name=virtual_network.name)
 
-        self.subnet_id = subnet.id
+        # self.subnet_id = subnet.id
 
-        # Logic for creating a Public IP Address
-        location = self.config.get("location")
-        resource_group_name = self.config.get("resource_group_name")
+        # # Logic for creating a Public IP Address
+        # location = self.config.get("location")
+        # resource_group_name = self.config.get("resource_group_name")
 
-        public_ip = azure_native.network.PublicIPAddress(f"publicIP-azure",
-            resource_group_name=resource_group_name,
-            location=location,
-            public_ip_allocation_method="Dynamic")
+        # public_ip = azure_native.network.PublicIPAddress(f"publicIP-azure",
+        #     resource_group_name=resource_group_name,
+        #     location=location,
+        #     public_ip_allocation_method="Dynamic")
 
-        self.public_ip_id = public_ip.id
+        # self.public_ip_id = public_ip.id
 
     
     def create_instance(self):
-        subscription_id = self.config.get('subscription_id')
-        print(subscription_id)
+        # subscription_id = self.config.get('subscription_id')
+        # print(subscription_id)
 
-        azure_native.Provider('azure', subscription_id=subscription_id)
+        # azure_native.Provider('azure', subscription_id=subscription_id)
 
-        # Configure the azure provider
-        azure.Provider('azure', subscription_id=subscription_id, resource_provider_registrations=["Microsoft.Compute", "Microsoft.Network"])
+        # # Configure the azure provider
+        # azure.Provider('azure', subscription_id=subscription_id, resource_provider_registrations=["Microsoft.Compute", "Microsoft.Network"])
 
-        # Logic for creating an Azure VM
-        env = pulumi.get_stack()
-        appname = pulumi.get_project()
-        location = self.config.get("location")
-        resource_group_name = self.config.get("resource_group_name")
+        # # Logic for creating an Azure VM
+        # env = pulumi.get_stack()
+        # appname = pulumi.get_project()
+        # location = self.config.get("location")
+        # resource_group_name = self.config.get("resource_group_name")
 
-        network_interface = azure_native.network.NetworkInterface("networkInterface-" + env,
-            resource_group_name=resource_group_name,
-            location=location,
-            ip_configurations=[{
-                "name": "ipconfig1",
-                "subnet": azure_native.network.SubnetArgs(
-                    id=self.subnet_id,
-                ),
-                "public_ip_address": azure_native.network.PublicIPAddressArgs(
-                    id=self.public_ip_id,
-                ),
-            }]
-        )
+        # network_interface = azure_native.network.NetworkInterface("networkInterface-" + env,
+        #     resource_group_name=resource_group_name,
+        #     location=location,
+        #     ip_configurations=[{
+        #         "name": "ipconfig1",
+        #         "subnet": azure_native.network.SubnetArgs(
+        #             id=self.subnet_id,
+        #         ),
+        #         "public_ip_address": azure_native.network.PublicIPAddressArgs(
+        #             id=self.public_ip_id,
+        #         ),
+        #     }]
+        # )
 
         # vm = azure.compute.LinuxVirtualMachine(f"nginxReverseProxyVM-azure",
         #     resource_group_name=resource_group_name,
@@ -112,6 +112,86 @@ class AzureComponent(CloudServiceComponent):
         #     tags={"Environment": "Production"}
         # )
 
+        # self.vm_public_ip_address = vm.public_ip_address
+
+        # # Logic for configuring Nginx on the VM
+        # execute_script = command.remote.Command("executeNginxScript",
+        #     connection=command.remote.ConnectionArgs(
+        #         host=self.vm_public_ip_address,
+        #         user=self.admin_username,
+        #         password=self.admin_password,
+        #     ),
+        #     create="""
+        #     sudo apt-get update -y
+        #     sudo apt-get install -y nginx
+
+        #     sudo bash -c 'cat > /etc/nginx/sites-available/default' << 'EOF'
+        #     server {
+        #         listen 80;
+        #         server_name localhost;
+        #         root /var/www/html;
+        #         index index.html index.htm index.nginx-debian.html;
+        #         location / {
+        #             try_files $uri $uri/ =404;
+        #         }
+        #     }
+        #     server {
+        #         listen 80;
+        #         location / {
+        #             proxy_pass http://localhost;
+        #             proxy_set_header Host $host;
+        #             proxy_set_header X-Real-IP $remote_addr;
+        #             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        #             proxy_set_header X-Forwarded-Proto $scheme;
+        #         }
+        #     }
+        #     EOF
+        #     sudo systemctl restart nginx
+        #     """,
+        #     opts=pulumi.ResourceOptions(replace_on_changes=[])
+        # )
+        # Create a Virtual Network
+        vnet = azure_native.network.VirtualNetwork(
+            'vnet',
+            resource_group_name='my-resource-group',
+            location='West US',
+            address_space=azure_native.network.AddressSpaceArgs(
+                address_prefixes=['10.0.0.0/16']
+            )
+        )
+        
+        # Create a Subnet
+        subnet = azure_native.network.Subnet(
+            'subnet',
+            resource_group_name='my-resource-group',
+            virtual_network_name=vnet.name,
+            address_prefix='10.0.1.0/24'
+        )
+        
+        # Create a Public IP Address
+        public_ip = azure_native.network.PublicIPAddress(
+            'publicIp',
+            resource_group_name='my-resource-group',
+            location='West US',
+            public_ip_allocation_method='Dynamic'
+        )
+        
+        # Create a Network Interface
+        network_interface = azure_native.network.NetworkInterface(
+            'networkInterface',
+            resource_group_name='my-resource-group',
+            location='West US',
+            ip_configurations=[azure_native.network.NetworkInterfaceIPConfigurationArgs(
+                name='ipconfig1',
+                subnet=azure_native.network.SubnetArgs(
+                    id=subnet.id
+                ),
+                public_ip_address=azure_native.network.PublicIPAddressArgs(
+                    id=public_ip.id
+                )
+            )]
+        )
+        
         # Create a Linux Virtual Machine
         vm = azure_native.compute.LinuxVirtualMachine(
             'vm',
@@ -132,42 +212,6 @@ class AzureComponent(CloudServiceComponent):
                 version='latest'
             )
         )
-
-        self.vm_public_ip_address = vm.public_ip_address
-
-        # Logic for configuring Nginx on the VM
-        execute_script = command.remote.Command("executeNginxScript",
-            connection=command.remote.ConnectionArgs(
-                host=self.vm_public_ip_address,
-                user=self.admin_username,
-                password=self.admin_password,
-            ),
-            create="""
-            sudo apt-get update -y
-            sudo apt-get install -y nginx
-
-            sudo bash -c 'cat > /etc/nginx/sites-available/default' << 'EOF'
-            server {
-                listen 80;
-                server_name localhost;
-                root /var/www/html;
-                index index.html index.htm index.nginx-debian.html;
-                location / {
-                    try_files $uri $uri/ =404;
-                }
-            }
-            server {
-                listen 80;
-                location / {
-                    proxy_pass http://localhost;
-                    proxy_set_header Host $host;
-                    proxy_set_header X-Real-IP $remote_addr;
-                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    proxy_set_header X-Forwarded-Proto $scheme;
-                }
-            }
-            EOF
-            sudo systemctl restart nginx
-            """,
-            opts=pulumi.ResourceOptions(replace_on_changes=[])
-        )
+        
+        pulumi.export('public_ip_address', public_ip.ip_address)
+        pulumi.export('virtual_machine_id', vm.id)
