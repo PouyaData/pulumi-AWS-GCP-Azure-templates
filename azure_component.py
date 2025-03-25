@@ -183,7 +183,7 @@ class AzureComponent(CloudServiceComponent):
         
         # Export the VM's hostname, public IP address, HTTP URL, and SSH private key
         pulumi.export("ip", vm_address.ip_address)
-        pulumi.export("hostname", vm_address.dns_settings.apply(lambda settings: settings.fqdn))
+        # pulumi.export("hostname", vm_address.dns_settings.apply(lambda settings: settings.fqdn))
         # pulumi.export(
         #     "url",
         #     vm_address.dns_settings.apply(
