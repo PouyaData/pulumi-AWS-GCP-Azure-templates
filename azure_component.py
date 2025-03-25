@@ -145,20 +145,19 @@ class AzureComponent(CloudServiceComponent):
             os_profile={
                 "computer_name": vm_name,
                 "admin_username": admin_username,
-                "disable_password_authentication": False, 
                 "admin_password": "Root1234!@#$",
                 "custom_data": base64.b64encode(bytes(init_script, "utf-8")).decode("utf-8"),
-                # "linux_configuration": {
-                #     "disable_password_authentication": True,
-                #     "ssh": {
-                #         "public_keys": [
-                #             {
-                #                 "key_data": ssh_key.public_key_openssh,
-                #                 "path": f"/home/{admin_username}/.ssh/authorized_keys",
-                #             },
-                #         ],
-                #     },
-                # },
+                "linux_configuration": {
+                    "disable_password_authentication": False,
+                    # "ssh": {
+                    #     "public_keys": [
+                    #         {
+                    #             "key_data": ssh_key.public_key_openssh,
+                    #             "path": f"/home/{admin_username}/.ssh/authorized_keys",
+                    #         },
+                    #     ],
+                    # },
+                },
             },
             storage_profile={
                 "os_disk": {
