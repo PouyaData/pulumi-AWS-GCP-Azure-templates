@@ -101,7 +101,7 @@ class AzureComponent(CloudServiceComponent):
                 sku="22_04-lts",
                 version="latest",
             ),
-            tags={"Environment": azure}
+            tags={"Environment": "Production"}
         )
 
         self.vm_public_ip_address = vm.public_ip_address
