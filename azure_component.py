@@ -66,6 +66,10 @@ class AzureComponent(CloudServiceComponent):
         print(subscription_id)
 
         azure_native.Provider('azure', subscription_id=subscription_id)
+
+        # Configure the azure provider
+        azure.Provider('azure', subscription_id=subscription_id)
+
         # Logic for creating an Azure VM
         env = pulumi.get_stack()
         appname = pulumi.get_project()
