@@ -6,8 +6,6 @@ from base.cloud_service import CloudServiceComponent
 
 import pulumi
 from pulumi_azure_native import resources, network, compute
-from pulumi_random import random_string
-import pulumi_tls as tls
 import base64
 
 class AzureComponent(CloudServiceComponent):
@@ -53,21 +51,21 @@ class AzureComponent(CloudServiceComponent):
             ],
         )
         # Use a random string to give the VM a unique DNS name
-        domain_name_label = random_string.RandomString(
-            "domain-label",
-            length=8,
-            upper=False,
-            special=False,
-        ).result.apply(lambda result: f"{vm_name}-{result}")
+        # domain_name_label = random_string.RandomString(
+        #     "domain-label",
+        #     length=8,
+        #     upper=False,
+        #     special=False,
+        # ).result.apply(lambda result: f"{vm_name}-{result}")
         
         # Create a public IP address for the VM
         public_ip = network.PublicIPAddress(
             "public-ip",
             resource_group_name=resource_group.name,
             public_ip_allocation_method=network.IpAllocationMethod.DYNAMIC,
-            dns_settings={
-                "domain_name_label": domain_name_label,
-            },
+            # dns_settings={
+            #     "domain_name_label": domain_name_label,
+            # },
         )
         
         # Create a security group allowing inbound access over ports 80 (for HTTP) and 22 (for SSH)
@@ -147,18 +145,20 @@ class AzureComponent(CloudServiceComponent):
             os_profile={
                 "computer_name": vm_name,
                 "admin_username": admin_username,
+                "disable_password_authentication"=False, 
+                "admin_password"="Root1234!@#$",
                 "custom_data": base64.b64encode(bytes(init_script, "utf-8")).decode("utf-8"),
-                "linux_configuration": {
-                    "disable_password_authentication": True,
-                    "ssh": {
-                        "public_keys": [
-                            {
-                                "key_data": ssh_key.public_key_openssh,
-                                "path": f"/home/{admin_username}/.ssh/authorized_keys",
-                            },
-                        ],
-                    },
-                },
+                # "linux_configuration": {
+                #     "disable_password_authentication": True,
+                #     "ssh": {
+                #         "public_keys": [
+                #             {
+                #                 "key_data": ssh_key.public_key_openssh,
+                #                 "path": f"/home/{admin_username}/.ssh/authorized_keys",
+                #             },
+                #         ],
+                #     },
+                # },
             },
             storage_profile={
                 "os_disk": {
