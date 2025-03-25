@@ -20,11 +20,11 @@ class AzureComponent(CloudServiceComponent):
         key_vault_id = f"/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.KeyVault/vaults/{key_vault_name}"
 
         # Get secrets from Key Vault
-        admin_username = azure.keyvault.get_secret(name="adminUsername", key_vault_id=key_vault_id).value
-        admin_password = azure.keyvault.get_secret(name="adminPassword", key_vault_id=key_vault_id).value
+        # admin_username = azure.keyvault.get_secret(name="adminUsername", key_vault_id=key_vault_id).value
+        # admin_password = azure.keyvault.get_secret(name="adminPassword", key_vault_id=key_vault_id).value
 
-        self.admin_username = admin_username
-        self.admin_password = admin_password
+        self.admin_username = 'admin'
+        self.admin_password = 'Super!@#$$#@!1234'
 
 
     def create_network(self):
