@@ -63,6 +63,7 @@ class AzureComponent(CloudServiceComponent):
     
     def create_instance(self):
         subscription_id = self.config.get('subscription_id')
+        print(subscription_id)
 
         azure_native.Provider('azure', subscription_id=subscription_id)
         # Logic for creating an Azure VM
