@@ -25,11 +25,11 @@ class AzureComponent(CloudServiceComponent):
         os_image_publisher, os_image_offer, os_image_sku, os_image_version = os_image.split(":")
         
         # Create an SSH key
-        ssh_key = tls.PrivateKey(
-            "ssh-key",
-            algorithm="RSA",
-            rsa_bits=4096,
-        )
+        # ssh_key = tls.PrivateKey(
+        #     "ssh-key",
+        #     algorithm="RSA",
+        #     rsa_bits=4096,
+        # )
         
         # Create a resource group
         resource_group = resources.ResourceGroup("resource-group")
@@ -184,13 +184,13 @@ class AzureComponent(CloudServiceComponent):
         # Export the VM's hostname, public IP address, HTTP URL, and SSH private key
         pulumi.export("ip", vm_address.ip_address)
         pulumi.export("hostname", vm_address.dns_settings.apply(lambda settings: settings.fqdn))
-        pulumi.export(
-            "url",
-            vm_address.dns_settings.apply(
-                lambda settings: f"http://{settings.fqdn}:{service_port}"
-            ),
-        )
-        pulumi.export(
-            "privatekey",
-            ssh_key.private_key_openssh,
-        )
+        # pulumi.export(
+        #     "url",
+        #     vm_address.dns_settings.apply(
+        #         lambda settings: f"http://{settings.fqdn}:{service_port}"
+        #     ),
+        # )
+        # pulumi.export(
+        #     "privatekey",
+        #     ssh_key.private_key_openssh,
+        # )
