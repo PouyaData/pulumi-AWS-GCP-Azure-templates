@@ -145,8 +145,8 @@ class AzureComponent(CloudServiceComponent):
             os_profile={
                 "computer_name": vm_name,
                 "admin_username": admin_username,
-                "disable_password_authentication"=False, 
-                "admin_password"="Root1234!@#$",
+                "disable_password_authentication": False, 
+                "admin_password": "Root1234!@#$",
                 "custom_data": base64.b64encode(bytes(init_script, "utf-8")).decode("utf-8"),
                 # "linux_configuration": {
                 #     "disable_password_authentication": True,
