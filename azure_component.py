@@ -90,26 +90,47 @@ class AzureComponent(CloudServiceComponent):
             }]
         )
 
-        vm = azure.compute.LinuxVirtualMachine(f"nginxReverseProxyVM-azure",
-            resource_group_name=resource_group_name,
-            location=location,
+        # vm = azure.compute.LinuxVirtualMachine(f"nginxReverseProxyVM-azure",
+        #     resource_group_name=resource_group_name,
+        #     location=location,
+        #     network_interface_ids=[network_interface.id],
+        #     size="Standard_B1s",
+        #     disable_password_authentication=False, 
+        #     admin_username=self.admin_username,
+        #     admin_password=self.admin_password,
+        #     os_disk=azure.compute.LinuxVirtualMachineOsDiskArgs(
+        #         storage_account_type="Standard_LRS",
+        #         caching="ReadWrite",
+        #         disk_size_gb=30,
+        #     ),
+        #     source_image_reference=azure.compute.LinuxVirtualMachineSourceImageReferenceArgs(
+        #         publisher="Canonical",
+        #         offer="0001-com-ubuntu-server-jammy",
+        #         sku="22_04-lts",
+        #         version="latest",
+        #     ),
+        #     tags={"Environment": "Production"}
+        # )
+
+        # Create a Linux Virtual Machine
+        vm = azure_native.compute.LinuxVirtualMachine(
+            'vm',
+            resource_group_name='my-resource-group',
+            location='West US',
+            size='Standard_B1s',
+            admin_username='adminuser',
+            admin_password='Password1234!',
             network_interface_ids=[network_interface.id],
-            size="Standard_B1s",
-            disable_password_authentication=False, 
-            admin_username=self.admin_username,
-            admin_password=self.admin_password,
-            os_disk=azure.compute.LinuxVirtualMachineOsDiskArgs(
-                storage_account_type="Standard_LRS",
-                caching="ReadWrite",
-                disk_size_gb=30,
+            os_disk=azure_native.compute.LinuxVirtualMachineOsDiskArgs(
+                caching='ReadWrite',
+                storage_account_type='Standard_LRS'
             ),
-            source_image_reference=azure.compute.LinuxVirtualMachineSourceImageReferenceArgs(
-                publisher="Canonical",
-                offer="0001-com-ubuntu-server-jammy",
-                sku="22_04-lts",
-                version="latest",
-            ),
-            tags={"Environment": "Production"}
+            source_image_reference=azure_native.compute.LinuxVirtualMachineSourceImageReferenceArgs(
+                publisher='Canonical',
+                offer='UbuntuServer',
+                sku='18.04-LTS',
+                version='latest'
+            )
         )
 
         self.vm_public_ip_address = vm.public_ip_address
