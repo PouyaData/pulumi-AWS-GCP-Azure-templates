@@ -9,8 +9,13 @@ class GCPComponent(CloudServiceComponent):
         
 
     def create_key_vault(self):        
+        ssh_key_path = os.path.expanduser("~/.ssh/my-gcp-key.pub")
+        
+        if not os.path.exists(ssh_key_path):
+            raise FileNotFoundError(f"SSH public key not found: {ssh_key_path}")
+            
         # Read the public key from the file
-        with open('.ssh/my-gcp-key.pub', 'r') as pub_key_file:
+        with open(ssh_key_path', 'r') as pub_key_file:
             public_key = pub_key_file.read().strip()
         self.public_key = public_key
 
