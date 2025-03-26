@@ -1,6 +1,7 @@
 from base.cloud_service import CloudServiceComponent
 import pulumi
 import pulumi_gcp as gcp
+import os
 
 class GCPComponent(CloudServiceComponent):
     def __init__(self, config):
