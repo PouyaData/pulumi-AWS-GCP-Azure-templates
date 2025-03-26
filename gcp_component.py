@@ -16,7 +16,7 @@ class GCPComponent(CloudServiceComponent):
             raise FileNotFoundError(f"SSH public key not found: {ssh_key_path}")
             
         # Read the public key from the file
-        with open(ssh_key_path', 'r') as pub_key_file:
+        with open(ssh_key_path, 'r') as pub_key_file:
             public_key = pub_key_file.read().strip()
         self.public_key = public_key
 
