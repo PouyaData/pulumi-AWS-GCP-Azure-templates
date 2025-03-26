@@ -10,7 +10,7 @@ class GCPComponent(CloudServiceComponent):
 
     def create_key_vault(self):        
         # Read the public key from the file
-        with open('.ssh/my-ec2-keypair.pub', 'r') as pub_key_file:
+        with open('.ssh/my-gcp-key.pub', 'r') as pub_key_file:
             public_key = pub_key_file.read().strip()
         self.public_key = public_key
 
