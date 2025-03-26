@@ -44,7 +44,7 @@ class GCPComponent(CloudServiceComponent):
         # Logic for creating a VM instance
         instance = gcp.compute.Instance("my-instance",
             machine_type="e2-medium",  # Example machine type
-            zone="us-central1-a",
+            zone="us-central1-c",
             boot_disk=gcp.compute.InstanceBootDiskArgs(
                 initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(
                     image="ubuntu-minimal-2004-focal-v20240812",  # Example image
