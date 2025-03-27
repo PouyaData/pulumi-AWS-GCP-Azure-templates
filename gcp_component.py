@@ -155,6 +155,7 @@ class GCPComponent(CloudServiceComponent):
         instance = gcp.compute.Instance(
             "instance",
             machine_type=machine_type,
+            zone="us-central1-a",
             boot_disk={
                 "initialize_params": {
                     "image": os_image,
