@@ -95,7 +95,7 @@ class GCPComponent(CloudServiceComponent):
     #     self.private_ip = instance.network_interfaces[0].network_ip
     def create_instance(self):
         config = pulumi.Config()
-        machine_type = config.get("machineType", "f1-micro")
+        machine_type = config.get("machineType", "e2-medium")
         os_image = config.get("osImage", "debian-11")
         instance_tag = config.get("instanceTag", "webserver")
         service_port = config.get("servicePort", "80")
