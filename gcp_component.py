@@ -166,15 +166,16 @@ class GCPComponent(CloudServiceComponent):
                 {
                     "network": network.id,
                     "subnetwork": subnet.id,
-                    "access_configs": [
-                        {},
-                    ],
+                    "access_configs": [],
                 },
             ],
             service_account={
                 "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
                 ],
+            },
+            metadata={
+                "enable-oslogin": "TRUE",
             },
             allow_stopping_for_update=True,
             metadata_startup_script=metadata_startup_script,
