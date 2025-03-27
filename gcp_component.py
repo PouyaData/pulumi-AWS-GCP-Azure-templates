@@ -93,7 +93,7 @@ class GCPComponent(CloudServiceComponent):
     #     self.instance_id = instance.id
     #     self.public_ip = instance.network_interfaces[0].access_configs[0].nat_ip
     #     self.private_ip = instance.network_interfaces[0].network_ip
-    def create_instance():
+    def create_instance(self):
         config = pulumi.Config()
         machine_type = config.get("machineType", "f1-micro")
         os_image = config.get("osImage", "debian-11")
