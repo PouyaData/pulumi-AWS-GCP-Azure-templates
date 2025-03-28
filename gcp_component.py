@@ -80,7 +80,9 @@ class GCPComponent(CloudServiceComponent):
                 {
                     "network": network.id,
                     "subnetwork": subnet.id,
-                    "access_configs": [{}],
+                    "access_configs": [
+                        {},
+                    ],
                 },
             ],
             service_account={
