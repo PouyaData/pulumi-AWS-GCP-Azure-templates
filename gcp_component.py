@@ -76,10 +76,13 @@ class GCPComponent(CloudServiceComponent):
                     "image": os_image,
                 },
             },
-            network_interfaces=[gcp.compute.InstanceNetworkInterfaceArgs(
-                network="default",
-                access_configs=[gcp.compute.InstanceNetworkInterfaceAccessConfigArgs()],  # Allocate a new ephemeral public IP address
-            )],
+            network_interfaces=[
+                {
+                    "network": network.id,
+                    "subnetwork": subnet.id,
+                    "access_configs": [],
+                },
+            ],
             service_account={
                 "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
